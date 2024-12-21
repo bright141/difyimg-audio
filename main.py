@@ -12,7 +12,7 @@ with open('data/config/provider.json', 'r') as config_file:
 url = config["dify-service-api"]["base-url"].rstrip("/v1")
 
 # 注册插件
-@register(name="dev", description="插件测试", version="0.1", author="bright")
+@register(name="difyimgaudio", description="适用于dify对话器的发送图片和语音", version="0.1", author="bright")
 class MyPlugin(BasePlugin):
 
     # 插件加载时触发
