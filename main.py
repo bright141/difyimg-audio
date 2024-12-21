@@ -1,6 +1,6 @@
 import re
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
-
+from pkg.plugin.events import *
 # 注册插件
 @register(name="dev", description="插件测试", version="0.1", author="bright")
 class MyPlugin(BasePlugin):
@@ -18,7 +18,5 @@ class MyPlugin(BasePlugin):
         pass
 
     @handler(NormalMessageResponded)
-    async def text_to_voice(self, ctx: EventContext):
-        user_prefer = self.ncv.load_user_preference(ctx.event.sender_id)
-        if not user_prefer["voice_switch"]:
-            return
+    async def on_normal_message_responded(self, ctx: EventContext):
+        await ctx.send_message("[bot] 插件测试")
