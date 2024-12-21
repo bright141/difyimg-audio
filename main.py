@@ -39,6 +39,7 @@ class MyPlugin(BasePlugin):
             image_url = url + match.group(1)
             message = MessageChain([Image(url=image_url)])
             await ctx.send_message(target_type, target_id, message)
+            ctx.prevent_default()  # 新增：阻止默认回复
             return
 
         # 提取语音URL
@@ -47,4 +48,5 @@ class MyPlugin(BasePlugin):
             audio_url = url + match.group(1)
             message = MessageChain([Voice(url=audio_url)])
             await ctx.send_message(target_type, target_id, message)
+            ctx.prevent_default()  # 新增：阻止默认回复
             return
