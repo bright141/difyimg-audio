@@ -1,11 +1,13 @@
 import re
 import json
+import os
 from mirai import MessageChain, Image, Voice
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
 from pkg.plugin.events import *  # 导入事件类
 
 # 读取配置文件
-with open('data/config/provider.json', 'r') as config_file:
+config_path = os.path.join('data', 'config', 'provider.json')
+with open(config_path, 'r') as config_file:
     config = json.load(config_file)
 
 # 从配置文件中获取dify地址并去除 "/v1" 部分
