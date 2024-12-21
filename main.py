@@ -7,7 +7,7 @@ from pkg.plugin.events import *  # 导入事件类
 
 # 读取配置文件
 config_path = os.path.join('data', 'config', 'provider.json')
-with open(config_path, 'r') as config_file:
+with open(config_path, 'r', encoding='gbk') as config_file:
     config = json.load(config_file)
 
 # 从配置文件中获取dify地址并去除 "/v1" 部分
