@@ -43,7 +43,7 @@ class MyPlugin(BasePlugin):
             return
 
         # 提取语音URL
-        match = re.search(r"\[.*?\]\((/files/tools/.*?\.wav\?timestamp=.*?)\)", content)
+        match = re.search(r"\[.*?\]\((/files/tools/.*?\.bin\?timestamp=.*?)\)", content)
         if match:
             audio_url = url + match.group(1)
             message = MessageChain([Voice(url=audio_url)])
