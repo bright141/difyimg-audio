@@ -18,11 +18,7 @@ class MyPlugin(BasePlugin):
         pass
 
     @handler(NormalMessageResponded)
-    async def on_normal_message_responded(self, ctx: EventContext):
-        content = ctx.event.response_text
-        if re.search(r"/files/tools/.*\.png\?timestamp=", content):
-            
-            ctx.event.response_text = "拦截成功，图片消息"
-        elif re.search(r"/files/tools/.*\.wav\?timestamp=", content):
-            
-            ctx.event.response_text = "拦截成功，语音消息"
+    async def text_to_voice(self, ctx: EventContext):
+        user_prefer = self.ncv.load_user_preference(ctx.event.sender_id)
+        if not user_prefer["voice_switch"]:
+            return
