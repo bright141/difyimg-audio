@@ -35,6 +35,15 @@ class MyPlugin(BasePlugin):
         target_type = ctx.event.launcher_type  # 获取目标类型
         target_id = str(ctx.event.launcher_id)  # 获取目标ID并转换为字符串
 
+        # 使用官方dify时提取完整图片URL
+        new_match = re.search(r"\[.*?\]\((https://upload\.dify\.ai/files/tools/.*?\.png\?timestamp=.*?)\)", content)
+        if new_match:
+            image_url = new_match.group(1)
+            message = MessageChain([Image(url=image_url)])
+            await ctx.send_message(target_type, target_id, message)
+            ctx.prevent_default()
+            return
+
         # 提取图片URL
         match = re.search(r"\[.*?\]\((/files/tools/.*?\.png\?timestamp=.*?)\)", content)
         if match:
@@ -42,6 +51,15 @@ class MyPlugin(BasePlugin):
             message = MessageChain([Image(url=image_url)])
             await ctx.send_message(target_type, target_id, message)
             ctx.prevent_default()  # 新增：阻止默认回复
+            return
+
+        # 使用官方dify时提取完整语音文件URL
+        match = re.search(r"\[.*?\]\((https://upload\.dify\.ai/files/tools/.*?\.bin\?timestamp=.*?)\)", content)
+        if match:
+            audio_url = match.group(1)
+            message = MessageChain([Voice(url=audio_url)])
+            await ctx.send_message(target_type, target_id, message)
+            ctx.prevent_default()
             return
 
         # 提取语音URL
